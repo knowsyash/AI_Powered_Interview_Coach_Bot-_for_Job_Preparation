@@ -2,7 +2,7 @@ import json
 import os
 
 def load_questions(role, difficulty):
-    file_path = os.path.join("src", "questions.json")
+    file_path = os.path.join("data", "questions.json")
     with open(file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     
