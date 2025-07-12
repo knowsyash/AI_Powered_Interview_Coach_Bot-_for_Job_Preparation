@@ -1,0 +1,26 @@
+{
+  "Data Scientist": {
+    "easy": [
+      {
+        "question": "What is overfitting?",
+        "answer": "Overfitting is when a model learns the training data too well, including noise."
+      }
+    ]
+  },
+  "ML Engineer": {
+    "easy": [
+      {
+        "question": "What is model deployment?",
+        "answer": "Model deployment is making a trained model available for real-world use."
+      }
+    ]
+  },
+  "Web Developer": {
+    "easy": [
+      {
+        "question": "What is responsive design?",
+        "answer": "Responsive design ensures websites work on various devices and screen sizes."
+      }
+    ]
+  }
+}
