@@ -33,3 +33,38 @@ Answer    : i do not understand
 Score     : 0.0
 Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
 
+---- New Response ----
+Timestamp : 2025-07-12 13:13:01.236667
+Question  : What is overfitting?
+Answer    : dfashfs
+Score     : 0.0
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-07-24 18:54:37.111741
+Question  : What is overfitting?
+Answer    : overfitting is when our model shows 100 percent perfect data
+Score     : 0.25
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-07-24 19:35:12.626443
+Question  : What is overfitting?
+Answer    : where our model always perform very well in wrong condtions also
+Score     : 0.12
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-07-24 19:36:04.812537
+Question  : What is the difference between supervised and unsupervised learning?
+Answer    : supervised learning we work on labeled data and in unsupervised learning we work on unlabled data where we make cluster
+Score     : 0.46
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-07-24 19:36:55.733404
+Question  : What is tokenization
+Answer    : create small token from words or chunks of data
+Score     : 0.07
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+

@@ -6,7 +6,7 @@ from logger import log_response
 print("=== Interview Coach Bot ===")
 
 # Step 1: Choose Role
-available_roles = ["Data Scientist", "ML Engineer", "Web Developer"]
+available_roles = ["Data Scientist", "ML Engineer", "Deep Learning Engineer", "Web Developer"]
 
 print("\nAvailable roles:")
 for i, role_name in enumerate(available_roles):
@@ -14,12 +14,12 @@ for i, role_name in enumerate(available_roles):
 
 while True:
     try:
-        role_choice = int(input("Choose a role (1/2/3): "))
+        role_choice = int(input(f"Choose a role (1-{len(available_roles)}): "))
         if 1 <= role_choice <= len(available_roles):
             role = available_roles[role_choice - 1]
             break
         else:
-            print("❌ Invalid choice. Please choose 1, 2, or 3.")
+            print(f"❌ Invalid choice. Please choose 1-{len(available_roles)}.")
     except ValueError:
         print("❌ Please enter a valid number.")
 

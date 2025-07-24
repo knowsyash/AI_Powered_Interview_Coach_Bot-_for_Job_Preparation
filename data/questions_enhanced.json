@@ -1,0 +1,505 @@
+{
+  "Data Scientist": {
+    "easy": [
+      {
+        "question": "What is overfitting?",
+        "answer": "Overfitting occurs when a model learns training data too well, including noise, reducing generalization ability."
+      },
+      {
+        "question": "What is the difference between supervised and unsupervised learning?",
+        "answer": "Supervised learning uses labeled data to train models, while unsupervised learning finds patterns in unlabeled data."
+      },
+      {
+        "question": "What is cross-validation?",
+        "answer": "Cross-validation evaluates model performance by splitting data into training and validation sets multiple times."
+      }
+    ],
+    "medium": [],
+    "hard": []
+  },
+  "ML Engineer": {
+    "easy": [
+      {
+        "question": "What is model deployment?",
+        "answer": "Model deployment makes trained models available for real-world use through APIs, web services, or applications."
+      },
+      {
+        "question": "What is feature engineering?",
+        "answer": "Feature engineering creates, transforms, and selects relevant features from raw data to improve model performance."
+      }
+    ],
+    "medium": [
+      {
+        "question": "What is backpropagation?",
+        "answer": "Backpropagation calculates gradients and updates neural network weights by propagating errors backward through layers."
+      },
+      {
+        "question": "What is the difference between CNN and RNN?",
+        "answer": "CNNs process spatial data like images using convolutions, while RNNs handle sequential data with memory mechanisms."
+      }
+    ],
+    "hard": []
+  },
+  "Deep Learning Engineer": {
+    "easy": [
+      {
+        "question": "What is padding",
+        "answer": "Padding adds zeros around input data to maintain spatial dimensions after convolution operations."
+      },
+      {
+        "question": "What is PoS Tagging",
+        "answer": "Part-of-Speech tagging assigns grammatical categories (noun, verb, adjective) to words in text."
+      },
+      {
+        "question": "What is tokenization",
+        "answer": "Tokenization splits text into individual words, phrases, or meaningful elements for processing."
+      },
+      {
+        "question": "What is topic modeling",
+        "answer": "Topic modeling discovers abstract topics in document collections using unsupervised learning methods."
+      },
+      {
+        "question": "What is back propagation",
+        "answer": "Backpropagation calculates gradients and updates neural network weights by propagating errors backward."
+      },
+      {
+        "question": "What is the idea behind GANs",
+        "answer": "GANs use two competing networks (generator vs discriminator) to create realistic synthetic data."
+      },
+      {
+        "question": "What is the Computational Graph",
+        "answer": "A computational graph represents operations as nodes and data flow as edges for efficient gradient computation."
+      },
+      {
+        "question": "What is sigmoid What does it do",
+        "answer": "Sigmoid activation function maps inputs to (0,1) range, useful for binary classification output layers."
+      },
+      {
+        "question": "What is Named-Entity Recognition",
+        "answer": "This question requires understanding of what is named-entity recognition. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is backward and forward propagation",
+        "answer": "This question requires understanding of what is backward and forward propagation. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is a local optimumWhat is a local optimum",
+        "answer": "This question requires understanding of what is a local optimumwhat is a local optimum. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is ReLU How is it better than sigmoid or tanh",
+        "answer": "This question requires understanding of what is relu how is it better than sigmoid or tanh. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is transfer learning have you used it before",
+        "answer": "This question requires understanding of what is transfer learning have you used it before. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is multi-task learning When should it be used",
+        "answer": "This question requires understanding of what is multi-task learning when should it be used. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the difference between NLP and NLU",
+        "answer": "This question requires understanding of what is the difference between nlp and nlu. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What Is a Multi-layer Perceptron MLPWhat Is a Multi-layer Perceptron MLP",
+        "answer": "This question requires understanding of what is a multi-layer perceptron mlpwhat is a multi-layer perceptron mlp. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is pooling in CNN Why do we need it",
+        "answer": "This question requires understanding of what is pooling in cnn why do we need it. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is gradient descent How does it work",
+        "answer": "This question requires understanding of what is gradient descent how does it work. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is vanishing gradient descent",
+        "answer": "This question requires understanding of what is vanishing gradient descent. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the use of the leaky ReLU function",
+        "answer": "This question requires understanding of what is the use of the leaky relu function. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the difference between machine learning and deep learning",
+        "answer": "This question requires understanding of what is the difference between machine learning and deep learning. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is a dropout layer and how does it help a neural network",
+        "answer": "This question requires understanding of what is a dropout layer and how does it help a neural network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the difference between LSTM and GRU",
+        "answer": "This question requires understanding of what is the difference between lstm and gru. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Define Term Freuency & Inverse Document Freuency Tf-idf and how to use it for converting text to vector",
+        "answer": "This question requires understanding of define term freuency & inverse document freuency tf-idf and how to use it for converting text to vector. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the difference between online and batch learning",
+        "answer": "This question requires understanding of what is the difference between online and batch learning. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is an activation function and discuss the use of an activation function",
+        "answer": "This question requires understanding of what is an activation function and discuss the use of an activation function. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the range of activation functions",
+        "answer": "This question requires understanding of what is the range of activation functions. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is RNN and How does an RNN work",
+        "answer": "This question requires understanding of what is rnn and how does an rnn work. Provide a detailed technical explanation."
+      },
+      {
+        "question": "what is WordVec",
+        "answer": "This question requires understanding of what is wordvec. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is bag of words How we can use it for text vectorization",
+        "answer": "This question requires understanding of what is bag of words how we can use it for text vectorization. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the main difference between Adam and SGD",
+        "answer": "This question requires understanding of what is the main difference between adam and sgd. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is the difference between stochastic gradient descent SGD and gradient descent GD, Batch gradient descent, Stochastic gradient descent, Mini-batch gradient descent , what are the pros and cons for each of them",
+        "answer": "This question requires understanding of what is the difference between stochastic gradient descent sgd and gradient descent gd, batch gradient descent, stochastic gradient descent, mini-batch gradient descent , what are the pros and cons for each of them. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is a convolutional layer & Why do we actually need convolutions Can we use fully-connected layers for that",
+        "answer": "This question requires understanding of what is a convolutional layer & why do we actually need convolutions can we use fully-connected layers for that. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What is backpropagation How does it work Why do we need it",
+        "answer": "This question requires understanding of what is backpropagation how does it work why do we need it. Provide a detailed technical explanation."
+      }
+    ],
+    "medium": [
+      {
+        "question": "Sigmoid Vs Softmax",
+        "answer": "Sigmoid is used for binary classification (output 0-1), Softmax for multi-class (probability distribution)."
+      },
+      {
+        "question": "Difference between convex and non-convex cost function",
+        "answer": "This question requires understanding of difference between convex and non-convex cost function. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Explain the difference between an epoch a batch and an iteration",
+        "answer": "This question requires understanding of explain the difference between an epoch a batch and an iteration. Provide a detailed technical explanation."
+      },
+      {
+        "question": "difference between Vanishing gradient Vs Exploding gradient",
+        "answer": "This question requires understanding of difference between vanishing gradient vs exploding gradient. Provide a detailed technical explanation."
+      },
+      {
+        "question": "difference between various Activation functions such as Sigmoid , tanh, Softmax, ReLU, Leaky ReLU",
+        "answer": "This question requires understanding of difference between various activation functions such as sigmoid , tanh, softmax, relu, leaky relu. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Both decision trees and deep neural networks are non-linear classifier ie they separates the space by complicated decision boundary Why then it is so much easier for us to intuitively follow a decision tree model vs a deep neural network",
+        "answer": "This question requires understanding of both decision trees and deep neural networks are non-linear classifier ie they separates the space by complicated decision boundary why then it is so much easier for us to intuitively follow a decision tree model vs a deep neural network. Provide a detailed technical explanation."
+      }
+    ],
+    "hard": [
+      {
+        "question": "Explain the masked language model",
+        "answer": "This question requires understanding of explain the masked language model. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How do you preprocess text in NLP",
+        "answer": "This question requires understanding of how do you preprocess text in nlp. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How do you extract features in NLP",
+        "answer": "This question requires understanding of how do you extract features in nlp. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How is wordvec different from Glove",
+        "answer": "This question requires understanding of how is wordvec different from glove. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What Are the Different Layers on CNN",
+        "answer": "This question requires understanding of what are the different layers on cnn. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What makes CNNs translation invariant",
+        "answer": "This question requires understanding of what makes cnns translation invariant. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How is fastText different from wordvec",
+        "answer": "This question requires understanding of how is fasttext different from wordvec. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Explain Generative Adversarial Network",
+        "answer": "This question requires understanding of explain generative adversarial network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are Syntactic and Semantic Analysis",
+        "answer": "This question requires understanding of what are syntactic and semantic analysis. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Explain gates used in LSTM with their functions",
+        "answer": "This question requires understanding of explain gates used in lstm with their functions. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why do we remove stop words When do we not remove them",
+        "answer": "This question requires understanding of why do we remove stop words when do we not remove them. Provide a detailed technical explanation."
+      },
+      {
+        "question": "For online learning which one would you prefer SGD or Adagrad and why",
+        "answer": "This question requires understanding of for online learning which one would you prefer sgd or adagrad and why. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Is it always bad to have local optimaIs it always bad to have local optima",
+        "answer": "This question requires understanding of is it always bad to have local optimais it always bad to have local optima. Provide a detailed technical explanation."
+      },
+      {
+        "question": "In node2vec, what does embedding represent topological similarity or nearness",
+        "answer": "This question requires understanding of in node2vec, what does embedding represent topological similarity or nearness. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What do you understand by Boltzmann Machine and Restricted Boltzmann Machines",
+        "answer": "This question requires understanding of what do you understand by boltzmann machine and restricted boltzmann machines. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How to compute an inverse matrix faster by playing around with some computational tricks",
+        "answer": "This question requires understanding of how to compute an inverse matrix faster by playing around with some computational tricks. Provide a detailed technical explanation."
+      },
+      {
+        "question": "For infrequent/rare words which among CBOW and SkipGram should be used for wordvec training",
+        "answer": "This question requires understanding of for infrequent/rare words which among cbow and skipgram should be used for wordvec training. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Describe the structure of Artificial Neural Networks & RNN(recurrent neural network)",
+        "answer": "This question requires understanding of describe the structure of artificial neural networks & rnn(recurrent neural network). Provide a detailed technical explanation."
+      },
+      {
+        "question": "How to Select a Batch Size Will selecting a batch size produce better or worse results?",
+        "answer": "This question requires understanding of how to select a batch size will selecting a batch size produce better or worse results?. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are N-grams How can we use them",
+        "answer": "This question requires understanding of what are n-grams how can we use them. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How large should be N for our bag of words when using N-grams",
+        "answer": "This question requires understanding of how large should be n for our bag of words when using n-grams. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How can you use neural nets for text classification and computer vision",
+        "answer": "This question requires understanding of how can you use neural nets for text classification and computer vision. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Do gradient descent methods always converge at the same point",
+        "answer": "This question requires understanding of do gradient descent methods always converge at the same point. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are autoencoders Explain the different layers of autoencoders and mention three practical usages of them",
+        "answer": "This question requires understanding of what are autoencoders explain the different layers of autoencoders and mention three practical usages of them. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How to handle dying node problems in case of ReLU activation function",
+        "answer": "This question requires understanding of how to handle dying node problems in case of relu activation function. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are the different Deep Learning Frameworks",
+        "answer": "This question requires understanding of what are the different deep learning frameworks. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Explain why dropout in a neural network acts as a regularizer",
+        "answer": "This question requires understanding of explain why dropout in a neural network acts as a regularizer. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How to know whether your model is suffering from the problem of Exploding Gradients",
+        "answer": "This question requires understanding of how to know whether your model is suffering from the problem of exploding gradients. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How to handle exploding gradient problem",
+        "answer": "This question requires understanding of how to handle exploding gradient problem. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How Does an LSTM Network Work",
+        "answer": "This question requires understanding of how does an lstm network work. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What problem does Bi-LSTM solve instead of only LSTM",
+        "answer": "This question requires understanding of what problem does bi-lstm solve instead of only lstm. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What happens to the predictions of a CNN if an image is rotated",
+        "answer": "This question requires understanding of what happens to the predictions of a cnn if an image is rotated. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How does CNN help in translation and rotation invariance of images",
+        "answer": "This question requires understanding of how does cnn help in translation and rotation invariance of images. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are three primary convolutional neural network layers How are they commonly put together",
+        "answer": "This question requires understanding of what are three primary convolutional neural network layers how are they commonly put together. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Describe the architecture of a typical Convolutional Neural Network",
+        "answer": "This question requires understanding of describe the architecture of a typical convolutional neural network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What do you mean by Dropout and Batch Normalization, When and why use",
+        "answer": "This question requires understanding of what do you mean by dropout and batch normalization, when and why use. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Is dropout used on the test set",
+        "answer": "This question requires understanding of is dropout used on the test set. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Explain three different types of activation functions",
+        "answer": "This question requires understanding of explain three different types of activation functions. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why is Rectified Linear Unit a good activation function",
+        "answer": "This question requires understanding of why is rectified linear unit a good activation function. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why don't we use the Relu activation function in the output layer",
+        "answer": "This question requires understanding of why don't we use the relu activation function in the output layer. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What can go wrong if we use a linear activation instead of ReLU",
+        "answer": "This question requires understanding of what can go wrong if we use a linear activation instead of relu. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Give examples in which a many-to-one RNN architecture is appropriate, Give examples in which a many-to-one RNN architecture is appropriate",
+        "answer": "This question requires understanding of give examples in which a many-to-one rnn architecture is appropriate, give examples in which a many-to-one rnn architecture is appropriate. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why Sigmoid or Tanh is not preferred to be used as the activation function in the hidden layer of the neural network",
+        "answer": "This question requires understanding of why sigmoid or tanh is not preferred to be used as the activation function in the hidden layer of the neural network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why Tanh activation function preferred over sigmoid",
+        "answer": "This question requires understanding of why tanh activation function preferred over sigmoid. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are word embeddings Why are they useful",
+        "answer": "This question requires understanding of what are word embeddings why are they useful. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are some advantages of using character embeddings instead of word embeddings",
+        "answer": "This question requires understanding of what are some advantages of using character embeddings instead of word embeddings. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How do you get sentence meanings from word embeddings, considering the position of words in the sentence",
+        "answer": "This question requires understanding of how do you get sentence meanings from word embeddings, considering the position of words in the sentence. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Would you prefer gradient boosting trees model or logistic regression when doing text classification with bag of words",
+        "answer": "This question requires understanding of would you prefer gradient boosting trees model or logistic regression when doing text classification with bag of words. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are the advantages and disadvantages of bag of words",
+        "answer": "This question requires understanding of what are the advantages and disadvantages of bag of words. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are the advantages and disadvantages of SGD over gradient descent",
+        "answer": "This question requires understanding of what are the advantages and disadvantages of sgd over gradient descent. Provide a detailed technical explanation."
+      },
+      {
+        "question": "When would you use GD over SDG and vice-versa",
+        "answer": "This question requires understanding of when would you use gd over sdg and vice-versa. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How would you choose the number of filters and the filter size at each CNN layer",
+        "answer": "This question requires understanding of how would you choose the number of filters and the filter size at each cnn layer. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How can we use CNN for text classification",
+        "answer": "This question requires understanding of how can we use cnn for text classification. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are some advantages in using a CNN (convolutional neural network rather than a DNN (dense neural network in an image classification task",
+        "answer": "This question requires understanding of what are some advantages in using a cnn (convolutional neural network rather than a dnn (dense neural network in an image classification task. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Describe two ways to visualize features of a CNN in an image classification task",
+        "answer": "This question requires understanding of describe two ways to visualize features of a cnn in an image classification task. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why do segmentation CNNs typically have an encoder-decoder style / structure",
+        "answer": "This question requires understanding of why do segmentation cnns typically have an encoder-decoder style / structure. Provide a detailed technical explanation."
+      },
+      {
+        "question": "What are the advantages of parameter sharing in case of convolution",
+        "answer": "This question requires understanding of what are the advantages of parameter sharing in case of convolution. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why do we use convolutions for images rather than just Fully Connected layers",
+        "answer": "This question requires understanding of why do we use convolutions for images rather than just fully connected layers. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why would you use many small convolutional kernels such as x rather than a few large onesWhy would you use many small convolutional kernels such as x rather than a few large ones",
+        "answer": "This question requires understanding of why would you use many small convolutional kernels such as x rather than a few large oneswhy would you use many small convolutional kernels such as x rather than a few large ones. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why we generally use Softmax non-linearity function as the last operation in-network",
+        "answer": "This question requires understanding of why we generally use softmax non-linearity function as the last operation in-network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How does BatchNormalization differ in training and inferencing",
+        "answer": "This question requires understanding of how does batchnormalization differ in training and inferencing. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How does batch size affect training of neural networks",
+        "answer": "This question requires understanding of how does batch size affect training of neural networks. Provide a detailed technical explanation."
+      },
+      {
+        "question": "When using mini batch gradient descent, why is it important to shuffle the data",
+        "answer": "This question requires understanding of when using mini batch gradient descent, why is it important to shuffle the data. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Give a simple mathematical argument why a mini-batch version of such ML algorithm might be computationally more efficient than a training with full data set",
+        "answer": "This question requires understanding of give a simple mathematical argument why a mini-batch version of such ml algorithm might be computationally more efficient than a training with full data set. Provide a detailed technical explanation."
+      },
+      {
+        "question": "On a simplified and fundamental scale what makes the newly developed BERT model better than traditional NLP models",
+        "answer": "This question requires understanding of on a simplified and fundamental scale what makes the newly developed bert model better than traditional nlp models. Provide a detailed technical explanation."
+      },
+      {
+        "question": "How would you initialize weights in a neural network",
+        "answer": "This question requires understanding of how would you initialize weights in a neural network. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why weights are initialized with small random numbers in a neural network What happens when weights are all or constant values",
+        "answer": "This question requires understanding of why weights are initialized with small random numbers in a neural network what happens when weights are all or constant values. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Suppose you have a NN with layers and ReLU activations What will happen if we initialize all the weights with the same value",
+        "answer": "This question requires understanding of suppose you have a nn with layers and relu activations what will happen if we initialize all the weights with the same value. Provide a detailed technical explanation."
+      },
+      {
+        "question": "Why large filter sizes in early layers can be a bad choice How to choose filter size",
+        "answer": "This question requires understanding of why large filter sizes in early layers can be a bad choice how to choose filter size. Provide a detailed technical explanation."
+      },
+      {
+        "question": "which one is more powerful a layer decision tree or a -layer neural network without any activation function --> Hint non-linearity",
+        "answer": "This question requires understanding of which one is more powerful a layer decision tree or a -layer neural network without any activation function --> hint non-linearity. Provide a detailed technical explanation."
+      },
+      {
+        "question": "If you could take advantage of multiple CPU cores would you prefer a boosted-tree algorithm over a random forest",
+        "answer": "This question requires understanding of if you could take advantage of multiple cpu cores would you prefer a boosted-tree algorithm over a random forest. Provide a detailed technical explanation."
+      }
+    ]
+  },
+  "Web Developer": {
+    "easy": [
+      {
+        "question": "What is responsive design?",
+        "answer": "Responsive design ensures websites work well on various devices and screen sizes using flexible layouts."
+      }
+    ],
+    "medium": [],
+    "hard": []
+  }
+}
