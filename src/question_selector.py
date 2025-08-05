@@ -19,5 +19,5 @@ def load_questions(role, difficulty):
     questions = data[role][difficulty]
     if not questions:
         raise ValueError(f"No questions found for {role} - {difficulty} level.")
-    
+
     return questions

@@ -68,3 +68,24 @@ Answer    : create small token from words or chunks of data
 Score     : 0.07
 Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
 
+---- New Response ----
+Timestamp : 2025-07-24 22:19:42.040418
+Question  : What is cross-validation?
+Answer    : maa kc
+Score     : 0.0
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-08-05 22:42:47.040272
+Question  : What is padding
+Answer    : padding is adding margin around data
+Score     : 0.26
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
+---- New Response ----
+Timestamp : 2025-08-05 22:43:24.689997
+Question  : What is tokenization
+Answer    : breaking to smallest unit of code
+Score     : 0.0
+Feedback  : ❌ Needs improvement. Try to study the core concept and include relevant keywords.
+
