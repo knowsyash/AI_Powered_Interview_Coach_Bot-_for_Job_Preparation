@@ -1,3 +1,9 @@
-nltk
+flask
+gunicorn
+sentence-transformers
+torch
+joblib
+numpy
 scikit-learn
 pandas
+Flask-Cors

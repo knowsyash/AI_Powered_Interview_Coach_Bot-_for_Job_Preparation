@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import random
 import pandas as pd
 import os
 import nltk
-from random_forest_evaluator import RandomForestAnswerEvaluator
+from dataset_loader import DatasetLoader
+from semantic_evaluator import SemanticAnswerEvaluator
 from reference_answer_loader import ReferenceAnswerLoader
-from tfidf_evaluator import TFIDFAnswerEvaluator
+
 
 # Download NLTK data at startup
 import ssl
@@ -23,38 +25,28 @@ for resource in ['punkt', 'punkt_tab', 'stopwords', 'wordnet', 'omw-1.4']:
         pass
 
 app = Flask(__name__)
+CORS(app) # This will enable CORS for all routes
 
 class InterviewBotSession:
     def __init__(self, category='webdev'):
         self.category = category
-        self.current_question_idx = 0
         self.questions = []
         self.scores = []
         self.answers = []
+        self.current_question_idx = 0
         self.current_question = None
-        self.current_answer = None
-        self.rf_evaluator = None
-        self.ref_loader = None
-        self.tfidf_evaluator = None
         
-        # Initialize evaluators
-        self._initialize_evaluators()
-        
-        # Load questions
-        self._load_questions()
-    
-    def _initialize_evaluators(self):
-        """Initialize the evaluators"""
+        # Load the new Lite LLM semantic evaluator
+        self.semantic_evaluator = SemanticAnswerEvaluator()
         try:
-            self.rf_evaluator = RandomForestAnswerEvaluator()
-            # Load the trained Random Forest model
-            self.rf_evaluator.load_model()
-            self.ref_loader = ReferenceAnswerLoader()
-            self.tfidf_evaluator = TFIDFAnswerEvaluator()
+            self.semantic_evaluator.load_model()
         except Exception as e:
             print(f"Error initializing evaluators: {e}")
             # Set rf_evaluator to None if model loading fails
             self.rf_evaluator = None
+            
+        # Load questions
+        self._load_questions()
     
     def _load_questions(self):
         """Load questions based on category"""
@@ -74,6 +66,9 @@ class InterviewBotSession:
         # Try multiple possible paths for flexibility (local and deployed)
         base_dir = os.path.dirname(os.path.abspath(__file__))
         possible_paths = [
+            os.path.join(base_dir, 'dataset', csv_file),
+            os.path.join(base_dir, '..', 'dataset', csv_file),
+            os.path.join('dataset', csv_file),
             os.path.join(base_dir, 'real_dataset_score', csv_file),
             os.path.join(base_dir, '..', 'real_dataset_score', csv_file),
             os.path.join('real_dataset_score', csv_file)
@@ -146,76 +141,91 @@ class InterviewBotSession:
             return self.current_question['question']
         return None
     
-    def evaluate_answer(self, answer):
-        """Evaluate the user's answer using both TF-IDF and Random Forest"""
+    def evaluate_answer(self, answer, experience_level='junior', strictness='normal', hint_used=False, received_hint=None):
+        """Evaluate the user's answer using the advanced Semantic Embedding model"""
         if not self.current_question:
             return None
         
         self.current_answer = answer
         
-        # Get reference answer if available
-        reference_answer = None
-        if self.current_question.get('has_reference'):
-            reference_answer = {
-                'answer': self.current_question['answer'],
-                'competency': self.current_question['competency'],
-                'human_score': self.current_question.get('human_score', 0)
-            }
+        # Check for copied hint
+        if received_hint and isinstance(received_hint, str):
+            clean_hint = received_hint.replace("Think about: ", "").replace("Hint from reference: ", "").strip().lower()
+            clean_ans = answer.strip().lower()
+            
+            # If they just pasted the hint or the hint makes up most of their answer
+            if clean_hint and (clean_hint in clean_ans or clean_ans in clean_hint) and len(clean_ans) > 10:
+                final_score_10 = 0.0
+                feedback = "FOUL: Copied directly from hint! 0 Marks. You must write your own original answer."
+                self.scores.append(final_score_10)
+                self.answers.append({
+                    'question': self.current_question['question'],
+                    'answer': answer,
+                    'score': final_score_10,
+                    'feedback': feedback
+                })
+                return {
+                    'score': final_score_10,
+                    'feedback': feedback,
+                    'reference_answer': self.current_question.get('answer', 'No reference answer available.'),
+                    'is_foul': True
+                }
         
-        # Evaluate with both models and combine scores
-        tfidf_result = None
-        rf_result = None
-        
-        # Get TF-IDF score
-        tfidf_result = self.tfidf_evaluator.evaluate_answer(
-            self.current_question['question'],
-            answer,
-            reference_answer
-        )
-        tfidf_score = tfidf_result['score']
-        tfidf_feedback = tfidf_result['feedback']
-        
-        # Get Random Forest score if model is available
-        if self.rf_evaluator and self.rf_evaluator.model is not None:
-            rf_result = self.rf_evaluator.evaluate_answer(
+        # Evaluate using the semantic model
+        if self.semantic_evaluator:
+            result = self.semantic_evaluator.evaluate_answer(
                 self.current_question['question'],
-                answer,
-                reference_answer
+                answer
             )
-            rf_score = rf_result['predicted_score']
-            rf_feedback = rf_result['feedback']
-            
-            # Combine scores (weighted average: 50% TF-IDF + 50% Random Forest)
-            final_score = (tfidf_score * 0.5) + (rf_score * 0.5)
-            
-            # Build professional combined feedback
-            feedback_parts = [
-                f"Overall Score: {final_score:.2f}/10.0",
-                f"\n\nTF-IDF Analysis Score: {tfidf_score:.2f}/10.0",
-                f"\n{tfidf_feedback}",
-                f"\n\nMachine Learning Model Score: {rf_score:.2f}/10.0",
-                f"\n{rf_feedback}"
-            ]
-            
-            feedback = ''.join(feedback_parts)
+            final_score = result['predicted_score']
+            feedback = f"Semantic Analysis Score: {final_score:.2f}/10.0\n\n{result['feedback']}"
         else:
-            # Fallback to TF-IDF only if Random Forest not available
-            final_score = tfidf_score
-            feedback = f"Score: {tfidf_score:.2f}/10.0\n\n{tfidf_feedback}"
+            # Fallback if model fails to load
+            final_score = 5.0
+            feedback = "Score: 5.0/10.0\n\nUnable to evaluate answer: Semantic model not loaded."
+
+        # Apply strict caps for extremely short answers
+        word_count = len(answer.split())
+        score_caps = []
+        if word_count < 8:
+            score_caps.append(3.0)
+            feedback += "\n\nAnswer too short; score capped."
+        elif word_count < 15:
+            score_caps.append(4.5)
+
+        if score_caps:
+            final_score = min(final_score, *score_caps)
         
+        # Apply modifiers
+        if strictness == 'strict':
+            final_score *= 0.90
+        elif strictness == 'lenient':
+            final_score = min(10.0, final_score * 1.10)
+            
+        if experience_level == 'senior':
+            final_score *= 0.85
+            feedback += "\n\nNote: Graded with Senior-level expectations."
+        elif experience_level == 'mid':
+            final_score *= 0.95
+            
+        if hint_used:
+            final_score *= 0.90
+            feedback += "\n\nNote: -10% penalty applied for using a hint."
+
+        # Keep on 10-point scale as requested
+        final_score_10 = round(final_score, 1)
+
         # Store score
-        self.scores.append(final_score)
+        self.scores.append(final_score_10)
         self.answers.append({
             'question': self.current_question['question'],
             'answer': answer,
-            'score': final_score,
-            'feedback': feedback,
-            'tfidf_score': tfidf_score,
-            'rf_score': rf_score if rf_result else None
+            'score': final_score_10,
+            'feedback': feedback
         })
         
         return {
-            'score': final_score,
+            'score': final_score_10,
             'feedback': feedback,
             'reference_answer': self.current_question.get('answer', 'No reference answer available.')
         }
@@ -250,124 +260,117 @@ class InterviewBotSession:
 # Global session storage
 sessions = {}
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-@app.route('/initialize', methods=['POST'])
-def initialize():
-    try:
-        data = request.json
-        category = data.get('category', 'webdev')
+@app.route('/get_question', methods=['GET'])
+def get_question():
+    category = request.args.get('category', 'webdev')
+    session = InterviewBotSession(category)
+    question = session.get_next_question()
+    if question:
+        # Store the session for evaluation
         session_id = str(random.randint(1000, 9999))
-        
-        # Create new session
-        sessions[session_id] = InterviewBotSession(category)
-        
+        sessions[session_id] = session
+        return jsonify({'question': question, 'session_id': session_id})
+    else:
+        return jsonify({'error': 'No questions available for this category.'}), 500
+
+@app.route('/evaluate', methods=['POST'])
+def evaluate():
+    data = request.json
+    question = data.get('question')
+    answer = data.get('answer')
+    session_id = data.get('session_id')
+    experience_level = data.get('experienceLevel', 'junior')
+    strictness = data.get('strictness', 'normal')
+    hint_used = data.get('hintUsed', False)
+    received_hint = data.get('receivedHint', None)
+
+    if not session_id or session_id not in sessions:
+        return jsonify({'error': 'Invalid session ID.'}), 400
+
+    session = sessions[session_id]
+    
+    # The current question is already set in the session when get_question was called
+    # We just need to make sure the question from the request matches the one in the session
+    if not session.current_question or session.current_question['question'] != question:
+        return jsonify({'error': 'Question mismatch.'}), 400
+
+    result = session.evaluate_answer(answer, experience_level, strictness, hint_used, received_hint)
+
+    if result:
+        # Move to the next question in the session
+        session.move_to_next()
         return jsonify({
-            'status': 'success',
-            'message': f'Interview Bot initialized for {category.upper()} domain!',
-            'session_id': session_id,
-            'total_questions': len(sessions[session_id].questions)
+            'score': result['score'],
+            'feedback': result['feedback'],
+            'reference_answer': result.get('reference_answer'),
+            'is_foul': result.get('is_foul', False)
         })
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+    else:
+        return jsonify({'error': 'Could not evaluate answer.'}), 500
 
-@app.route('/ask', methods=['POST'])
-def ask_question():
-    try:
-        data = request.json
-        session_id = data.get('session_id')
+@app.route('/skip', methods=['POST'])
+def skip_question():
+    data = request.json
+    session_id = data.get('session_id')
+    
+    if not session_id or session_id not in sessions:
+        return jsonify({'error': 'Invalid session ID.'}), 400
         
-        if session_id not in sessions:
-            return jsonify({'status': 'error', 'message': 'Invalid session. Please initialize first.'})
+    session = sessions[session_id]
+    
+    if not session.current_question:
+        return jsonify({'error': 'No active question.'}), 400
         
-        session = sessions[session_id]
-        question = session.get_next_question()
-        
-        if question:
-            return jsonify({
-                'status': 'success',
-                'question': question,
-                'question_number': session.current_question_idx + 1,
-                'total_questions': len(session.questions)
-            })
-        else:
-            return jsonify({
-                'status': 'complete',
-                'message': 'No more questions available.'
-            })
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+    # Record a 0 score for skipping
+    session.scores.append(0)
+    session.answers.append({
+        'question': session.current_question['question'],
+        'answer': '[SKIPPED]',
+        'score': 0,
+        'feedback': 'Question skipped by user.'
+    })
+    
+    # Move to the next question
+    session.move_to_next()
+    
+    return jsonify({
+        'success': True,
+        'message': 'Question skipped.'
+    })
 
-@app.route('/submit', methods=['POST'])
-def submit_answer():
-    try:
-        data = request.json
-        session_id = data.get('session_id')
-        answer = data.get('answer', '')
+@app.route('/get_hint', methods=['POST'])
+def get_hint():
+    data = request.json
+    session_id = data.get('session_id')
+    
+    if not session_id or session_id not in sessions:
+        return jsonify({'error': 'Invalid session ID.'}), 400
         
-        if session_id not in sessions:
-            return jsonify({'status': 'error', 'message': 'Invalid session.'})
+    session = sessions[session_id]
+    if not session.current_question:
+        return jsonify({'error': 'No active question.'}), 400
         
-        session = sessions[session_id]
-        result = session.evaluate_answer(answer)
+    ref_answer = str(session.current_question.get('answer', ''))
+    
+    # Generate a hint by taking the first ~15 words of the reference answer
+    words = ref_answer.split()
+    if len(words) > 15:
+        hint_text = " ".join(words[:15]) + "..."
+    else:
+        hint_text = ref_answer
         
-        if result:
-            return jsonify({
-                'status': 'success',
-                'score': result['score'],
-                'feedback': result['feedback'],
-                'reference_answer': result['reference_answer']
-            })
-        else:
-            return jsonify({'status': 'error', 'message': 'No current question to evaluate.'})
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+    # If the reference answer is empty or missing, provide a generic fallback
+    if not hint_text.strip():
+        hint_text = "Break the problem into smaller concepts and address them one by one."
+        
+    return jsonify({'hint': f"Think about: {hint_text}"})
 
-@app.route('/next', methods=['POST'])
-def next_question():
-    try:
-        data = request.json
-        session_id = data.get('session_id')
-        
-        if session_id not in sessions:
-            return jsonify({'status': 'error', 'message': 'Invalid session.'})
-        
-        session = sessions[session_id]
-        has_more = session.move_to_next()
-        
-        if has_more:
-            return jsonify({
-                'status': 'success',
-                'message': 'Ready for next question'
-            })
-        else:
-            return jsonify({
-                'status': 'complete',
-                'message': 'Interview session completed!'
-            })
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
 
-@app.route('/summary', methods=['POST'])
-def get_summary():
-    try:
-        data = request.json
-        session_id = data.get('session_id')
-        
-        if session_id not in sessions:
-            return jsonify({'status': 'error', 'message': 'Invalid session.'})
-        
-        session = sessions[session_id]
-        summary = session.get_summary()
-        
-        return jsonify({
-            'status': 'success',
-            'summary': summary
-        })
-    except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)})
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Endpoint to wake up the Render server and check status"""
+    return jsonify({'status': 'ok'}), 200
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
