@@ -1,7 +1,7 @@
 flask
 gunicorn
 sentence-transformers
-torch
+torch --index-url https://download.pytorch.org/whl/cpu
 joblib
 numpy
 scikit-learn

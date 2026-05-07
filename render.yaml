@@ -4,5 +4,5 @@ services:
     env: python
     region: oregon
     plan: free
-    startCommand: gunicorn --chdir AI_Interview_Bot --bind 0.0.0.0:$PORT app:app
+    startCommand: gunicorn --chdir AI_Interview_Bot --workers 1 --threads 2 --bind 0.0.0.0:$PORT app:app
     healthCheckPath: /health
