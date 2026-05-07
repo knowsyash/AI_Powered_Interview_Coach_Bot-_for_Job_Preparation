@@ -7,3 +7,4 @@ numpy
 scikit-learn
 pandas
 Flask-Cors
+nltk
