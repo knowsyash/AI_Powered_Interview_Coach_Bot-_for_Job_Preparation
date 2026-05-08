@@ -1,160 +1,192 @@
-# AI Interview Answer Analyzer
+# 🎯 VS Interviewer — AI-Powered Mock Interview Platform
 
-An intelligent web application that evaluates interview answers using machine learning algorithms, providing instant feedback and scoring based on reference answers and trained models.
+> Practice technical and behavioral interviews with real-time AI feedback, built inside a VS Code-inspired interface.
 
-## 🌐 Live Demo
+**Live Demo →** [your-vercel-url.vercel.app](https://your-vercel-url.vercel.app)
 
-**[Try it live!](https://interview-answer-analyzer.onrender.com/)**
+---
 
-## 📋 Overview
+## What is this?
 
-The AI Interview Answer Analyzer is a Flask-based web application designed to help interview candidates practice and receive feedback on their technical interview answers. The system uses a combination of TF-IDF (Term Frequency-Inverse Document Frequency) and Random Forest machine learning models to evaluate responses and provide scores along with detailed feedback.
+VS Interviewer is a mock interview tool that feels like your actual coding environment. You pick a technology, answer questions in a VS Code-style editor, and get instant AI-powered feedback with a score out of 10.
 
-## ✨ Features
+The AI doesn't just count keywords — it uses a **semantic embedding model** (the same family of models used by Google and Meta for understanding meaning) to evaluate how well your answer actually addresses the question.
 
-- **Real-time Answer Evaluation**: Get instant feedback on your interview answers
-- **Multiple Evaluation Methods**: 
-  - TF-IDF-based semantic similarity scoring
-  - Random Forest ML model trained on real interview data
-- **Interactive Web Interface**: User-friendly UI for seamless interaction
-- **Question Bank**: Comprehensive collection of web development interview questions
-- **Score Tracking**: Monitor your progress across multiple questions
-- **Detailed Feedback**: Receive constructive feedback on your answers
+---
 
-## 🛠️ Technology Stack
+## What can you practice?
 
-- **Backend**: Flask (Python)
-- **Machine Learning**: 
-  - scikit-learn (Random Forest, TF-IDF Vectorizer)
-  - NLTK (Natural Language Processing)
-  - pandas (Data Processing)
-- **Frontend**: HTML, CSS, JavaScript
-- **Deployment**: Render
-- **Model Storage**: joblib for model persistence
+| Category | Topics Covered |
+|---|---|
+| 🌐 **Web Dev** | HTML, CSS, React, Next.js |
+| 🐍 **Python** | Django, Flask, Data Science |
+| ☕ **Java** | Core Java, OOP, Spring |
+| ⚡ **Node.js** | React, Angular, Node, Express |
+| 🗄️ **Database** | MySQL, PostgreSQL, MongoDB |
+| 👥 **Behavioral** | STAR format, Leadership, Teamwork |
 
-## 📁 Project Structure
+---
+
+## How it works
+
+1. **Pick a category** from the sidebar
+2. **Read the question** — a timer starts automatically
+3. **Type your answer** in plain text or switch to **Code Editor mode** (Monaco — same as VS Code)
+4. **Submit** — the AI evaluates your answer in seconds
+5. **Review feedback** — see your score, what you got right, what to improve, and a reference answer
+6. **Keep going** or switch to **Session Mode** for a 5-question mock interview with a final report card
+
+---
+
+## Features
+
+**Interview Experience**
+- ⏱️ Per-question timer to simulate real interview pressure
+- 💡 Hint system — request a hint for a −10% score penalty
+- ⏭️ Skip questions you want to revisit
+- 🛡️ Anti-cheat: copying the hint directly gives 0 marks
+- 📝 Tab-switch detection logged in the terminal panel
+
+**Answer Input**
+- Plain text mode for explanations
+- Monaco Editor for code answers (VS Code-grade, with syntax highlighting)
+- Syntax validation for JavaScript answers
+
+**Scoring & Feedback**
+- AI score out of 10 based on semantic meaning, not just keywords
+- Reference answer shown after evaluation
+- Adjustable experience level: Junior / Mid / Senior
+- Adjustable strictness: Lenient / Normal / Strict
+
+**Analytics & Reports**
+- Score history chart (persisted in your browser)
+- 5-question session report with average, highest, lowest score, and a Pass/Needs Review verdict
+- PDF export of your session report
+
+**VS Code Aesthetic**
+- Explorer sidebar, tabbed editor, status bar, and output terminal — all styled like VS Code dark theme
+- Smooth transitions and animations throughout
+
+---
+
+## The AI Behind It
+
+The scoring system uses three ML models trained on real human-scored interview data:
+
+**1. Semantic Embedding Model** *(active in production)*
+Uses `all-MiniLM-L6-v2` — a lightweight BERT-based transformer (22M parameters) that converts your answer into a mathematical representation of its meaning. A Random Forest Regressor trained on 4,000 real StackOverflow and behavioral answers then predicts a score from this representation.
+
+**2. Random Forest Classifier** *(trained and benchmarked)*
+Extracts 23 hand-engineered features from your answer — STAR format components, competency indicators, vocabulary diversity, use of numbers, action verbs, and more. Trained on 1,514 Q&A pairs.
+
+**3. Custom TF-IDF Engine** *(trained and benchmarked)*
+A from-scratch TF-IDF + cosine similarity implementation (no sklearn) that compares your answer against a reference using term frequency weighting, Jaccard keyword overlap, and length ratio scoring.
+
+All three were benchmarked head-to-head. The semantic model won on RMSE, MAE, and within-±1.5 accuracy across the test set.
+
+---
+
+## Settings
+
+| Setting | Options | What it does |
+|---|---|---|
+| Experience Level | Junior / Mid / Senior | Adjusts score expectations (Senior = harder grading) |
+| Strictness | Lenient / Normal / Strict | Scales the raw score up or down |
+| Session Mode | On / Off | Groups 5 questions into a timed mock session |
+
+---
+
+## Running Locally
+
+**Backend (Python / Flask)**
+```bash
+cd AI_Interview_Bot
+pip install -r requirements.txt
+python app.py
+# Runs on http://localhost:7860
+```
+
+**Frontend (Next.js)**
+```bash
+cd frontend
+npm install
+npm run dev
+# Runs on http://localhost:3000
+```
+
+Create a `.env.local` in `/frontend`:
+```
+BACKEND_URL=http://localhost:7860
+```
+
+---
+
+## Deployment
+
+| Layer | Platform | Details |
+|---|---|---|
+| Frontend | **Vercel** | Next.js App Router, serverless functions as proxy |
+| Backend | **Hugging Face Spaces** | Docker container, Flask on port 7860 |
+| Alt Backend | **Render** | Gunicorn, 1 worker + 2 threads (free tier) |
+
+The frontend polls `/api/health` every 2 seconds on load and shows a startup screen while the backend wakes up from cold start — common on free-tier hosting.
+
+---
+
+## Tech Stack
+
+**Backend**
+- Python, Flask, Gunicorn
+- `sentence-transformers` — MiniLM embedding model
+- `scikit-learn` — Random Forest Classifier & Regressor
+- `PyTorch` (CPU build) — model runtime
+- `NLTK` — tokenization, lemmatization, stopwords
+- `pandas`, `numpy`, `joblib`
+- Docker (for Hugging Face Spaces)
+
+**Frontend**
+- Next.js 16, React 19, TypeScript
+- Framer Motion — animations
+- Monaco Editor — in-browser code editor
+- Recharts — score history charts
+- html2pdf.js — PDF export
+- Tailwind CSS v4, Radix UI, shadcn/ui, Lucide React
+
+---
+
+## Project Structure
 
 ```
 interview_answer_analyzer/
 ├── AI_Interview_Bot/
-│   ├── app.py                          # Main Flask application
-│   ├── random_forest_evaluator.py     # Random Forest model evaluator
-│   ├── tfidf_evaluator.py             # TF-IDF based evaluator
-│   ├── reference_answer_loader.py     # Reference answer handler
-│   ├── dataset_loader.py              # Dataset loading utilities
-│   ├── logger.py                      # Logging configuration
-│   ├── resources.py                   # Resource management
-│   ├── real_dataset_score/            # Training data and models
-│   │   ├── random_forest_model.joblib # Trained ML model
-│   │   ├── combined_training_data.csv # Training dataset
-│   │   └── webdev_interview_qa.csv    # Interview Q&A pairs
-│   ├── static/                        # CSS and JavaScript files
-│   │   ├── style.css
-│   │   └── script.js
-│   └── templates/                     # HTML templates
-│       └── index.html
-├── Research_Analysis/
-│   └── Optimized_Model_Training.ipynb # Model training notebook
-├── requirements.txt                    # Python dependencies
-├── render.yaml                        # Render deployment config
-└── build.sh                           # Build script
+│   ├── app.py                        # Flask API server
+│   ├── semantic_evaluator.py         # MiniLM + RF scoring (active)
+│   ├── random_forest_evaluator.py    # 23-feature RF classifier
+│   ├── tfidf_evaluator.py            # Custom TF-IDF engine
+│   ├── dataset_loader.py             # Smart CSV scanner + cache
+│   ├── reference_answer_loader.py    # Reference Q&A organizer
+│   ├── train_and_compare_semantic.py # Model benchmark script
+│   ├── Dockerfile                    # For Hugging Face Spaces
+│   └── real_dataset_score/
+│       ├── semantic_rf_model.joblib  # 3.4MB — active model
+│       ├── random_forest_model.joblib
+│       ├── interview_data_with_scores.csv
+│       └── stackoverflow_training_data.csv
+├── frontend/
+│   └── src/app/
+│       ├── page.tsx                  # Main UI (VS Code interface)
+│       └── api/                     # Next.js proxy routes
+├── requirements.txt
+├── render.yaml
+└── PROJECT_REPORT.md                 # Full technical documentation
 ```
-
-## 🚀 Installation & Setup
-
-### Prerequisites
-
-- Python 3.8 or higher
-- pip (Python package manager)
-
-### Local Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd interview_answer_analyzer
-   ```
-
-2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Run the application**
-   ```bash
-   cd AI_Interview_Bot
-   python app.py
-   ```
-
-4. **Access the application**
-   Open your browser and navigate to `http://localhost:5000`
-
-## 💡 Usage
-
-1. **Start the Application**: Visit the live demo or run locally
-2. **Answer Questions**: Read the interview question and type your answer
-3. **Submit & Evaluate**: Click submit to get your answer evaluated
-4. **Review Feedback**: Check your score and read the detailed feedback
-5. **Continue Practice**: Move to the next question to continue improving
-
-## 🎯 Scoring System
-
-The application uses a dual-evaluation approach:
-
-- **TF-IDF Similarity**: Measures semantic similarity between your answer and reference answers
-- **Random Forest Model**: ML model trained on real interview data to predict answer quality
-- **Final Score**: Combined score providing comprehensive evaluation (0-100 scale)
-
-## 🧠 Model Training
-
-The Random Forest model is trained on:
-- Real interview answer datasets
-- Stack Overflow Q&A pairs
-- Web development interview questions and answers
-- Combined training data with quality scores
-
-Training notebook available in `Research_Analysis/Optimized_Model_Training.ipynb`
-
-## 🌐 Deployment
-
-The application is deployed on Render. Deployment configuration:
-- **Platform**: Render
-- **Type**: Web Service
-- **Build Command**: `./build.sh`
-- **Start Command**: Defined in `render.yaml`
-
-## 📝 Dependencies
-
-Main dependencies include:
-- Flask
-- scikit-learn
-- pandas
-- nltk
-- joblib
-
-For a complete list, see [requirements.txt](requirements.txt)
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Improve documentation
-
-## 📄 License
-
-This project is available for educational and personal use.
-
-## 🔗 Links
-
-- **Live Application**: https://interview-answer-analyzer.onrender.com/
-- **Repository**: [Add your repository URL here]
-
-## 📧 Contact
-
-For questions or feedback, please open an issue in the repository.
 
 ---
 
-Made with ❤️ for interview preparation and practice
+## License
+
+MIT — feel free to use, fork, and build on top of this.
+
+---
+
+*Built with the goal of making interview practice feel less like studying and more like coding.*
